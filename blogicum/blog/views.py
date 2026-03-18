@@ -18,7 +18,8 @@ def category_posts(request, category_slug):
                                  slug=category_slug, is_published=True)
 
     post_list = Post.objects.filter(category=category,
-                                    is_published=True, pub_date__lte=timezone.now())
+                                    is_published=True, 
+                                    pub_date__lte=timezone.now())
 
     context = {'category': category, 'post_list': post_list}
 
@@ -26,7 +27,9 @@ def category_posts(request, category_slug):
 
 
 def index(request):
-    post_list = Post.objects.filter(pub_date__lte=timezone.now(),
-                                    is_published=True, category__is_published=True).order_by('-pub_date')[:5]
+    post_list = Post.objects.filter(
+        pub_date__lte=timezone.now(),
+        is_published=True, 
+        category__is_published=True).order_by('-pub_date')[:5]
     context = {'post_list': post_list}
     return render(request, 'blog/index.html', context)
