@@ -24,12 +24,12 @@ def test_blog_in_rus():
 
 
 @pytest.mark.parametrize(
-        ('n_model', 'n_verbose', 'n_verbose_plural'), [
-            ('Category', 'категория', 'Категории'),
-            ('Location', 'местоположение', 'Местоположения'),
-            ('Post', 'публикация', 'Публикации'),
-        ],
-        ids=['Category', 'Location', 'Post'],
+    ('n_model', 'n_verbose', 'n_verbose_plural'), [
+        ('Category', 'категория', 'Категории'),
+        ('Location', 'местоположение', 'Местоположения'),
+        ('Post', 'публикация', 'Публикации'),
+    ],
+    ids=['Category', 'Location', 'Post'],
 )
 def test_models_translated(n_model, n_verbose, n_verbose_plural):
     models = apps.get_models()
