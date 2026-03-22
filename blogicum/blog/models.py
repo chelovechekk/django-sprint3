@@ -56,4 +56,3 @@ class Post(PublCreatModel):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         ordering = ['-pub_date']
-
