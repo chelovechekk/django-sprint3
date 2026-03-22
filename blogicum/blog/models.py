@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from .constants import TITLE_MAX_LEN
 
 User = get_user_model()
 
 
-class BaseModel(models.Model):
+class PublCreatModel(models.Model):
     is_published = models.BooleanField(
         'Опубликовано', default=True, help_text='Снимите галочку, '
         'чтобы скрыть публикацию.')
@@ -15,29 +16,29 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class Category(BaseModel):
-    title = models.CharField('Заголовок', max_length=256)
+class Category(PublCreatModel):
+    title = models.CharField('Заголовок', max_length=TITLE_MAX_LEN)
     description = models.TextField('Описание')
     slug = models.SlugField('Идентификатор', unique=True,
                             help_text='Идентификатор страницы для URL; '
                             'разрешены символы латиницы, цифры, дефис '
                             'и подчёркивание.')
 
-    class Meta:
+    class Meta(PublCreatModel.Meta):
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
 
-class Location(BaseModel):
-    name = models.CharField('Название места', max_length=256)
+class Location(PublCreatModel):
+    name = models.CharField('Название места', max_length=TITLE_MAX_LEN)
 
-    class Meta:
+    class Meta(PublCreatModel.Meta):
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
 
-class Post(BaseModel):
-    title = models.CharField('Заголовок', max_length=256)
+class Post(PublCreatModel):
+    title = models.CharField('Заголовок', max_length=TITLE_MAX_LEN)
     text = models.TextField('Текст')
     pub_date = models.DateTimeField(
         'Дата и время публикации', help_text='Если установить дату и '
@@ -51,6 +52,8 @@ class Post(BaseModel):
         Category, on_delete=models.SET_NULL, blank=False, null=True,
         verbose_name='Категория')
 
-    class Meta:
+    class Meta(PublCreatModel.Meta):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        ordering = ['-pub_date']
+
